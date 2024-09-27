@@ -24,7 +24,7 @@ pygame.init()
 
 # Define a clock
 clock = pygame.time.Clock()
-FPS = 60
+FPS = 60/2
 
 # Create a window
 pygame.display.set_caption("Metros plan")
@@ -37,9 +37,15 @@ screen = pygame.display.set_mode((width, height))   # , pygame.RESIZABLE
 
 
 running = True
+
 zoom = 1.0
 zoom_button = Button(width-20-41*2-3, 20, 41, 41)
 dezoom_button = Button(width-20-41, 20, 41, 41)
+
+x_slide = 0
+y_slide = 0
+go_to_center_button = Button(width-20-21-6, 20+47, 27, 27)
+prev_pos_cursor, current_pos_cursor = (0, 0), (0, 0)
 
 
 all_stations = ListStations()
@@ -51,30 +57,36 @@ tools_menu = ToolsMenu()
 
 while running:
 
+    distance_off_screen = (center[0]-center[0]/zoom, center[1]-center[1]/zoom)
+    distance_in_screen = (center[0]/zoom, center[1]/zoom)
+
     # display the background
     # // faire un quadrillage
     pygame.draw.rect(screen, (255, 255, 255), (0, 0, width, height))
-    for w in range(center[0], -1, int(-51*zoom)):
+    for w in range(center[0]+int(x_slide), -1, int(-51*zoom)):
         pygame.draw.line(screen, (0, 0, 0), (w, 0), (w, height), int(1*zoom))
-        for h in range(center[1], -1, int(-51*zoom)):
+        for h in range(center[1]+int(y_slide), -1, int(-51*zoom)):
             fct.pygame_draw_cross(screen, (255, 0, 0), (w, h), 5*zoom, int(1*zoom))
             pygame.draw.line(screen, (0, 0, 0), (0, h), (width, h), int(1*zoom))
-        for h in range(center[1], 2 * center[1] + 1, int(51*zoom)):
+        for h in range(center[1]+int(y_slide), 2 * center[1] + 1, int(51*zoom)):
             fct.pygame_draw_cross(screen, (255, 0, 0), (w, h), 5*zoom, int(1*zoom))
             pygame.draw.line(screen, (0, 0, 0), (0, h), (width, h), int(1*zoom))
-    for w in range(center[0], center[0]*2+1, int(51*zoom)):
+    for w in range(center[0]+int(x_slide), center[0]*2+1, int(51*zoom)):
         pygame.draw.line(screen, (0, 0, 0), (w, 0), (w, height), int(1*zoom))
-        for h in range(center[1], -1, int(-51*zoom)):
+        for h in range(center[1]+int(y_slide), -1, int(-51*zoom)):
             fct.pygame_draw_cross(screen, (255, 0, 0), (w, h), 5*zoom, int(1*zoom))
             pygame.draw.line(screen, (0, 0, 0), (0, h), (width, h), int(1*zoom))
-        for h in range(center[1], 2 * center[1] + 1, int(51*zoom)):
+        for h in range(center[1]+int(y_slide), 2 * center[1] + 1, int(51*zoom)):
             fct.pygame_draw_cross(screen, (255, 0, 0), (w, h), 5*zoom, int(1*zoom))
             pygame.draw.line(screen, (0, 0, 0), (0, h), (width, h), int(1*zoom))
-    pygame.draw.circle(screen, "green", center, 5*zoom)  # to visualize the center
+    pygame.draw.circle(screen, "green", (center[0]+int(x_slide), center[1]+int(y_slide)), 5*zoom)  # to visualize the center
     # screen.blit(background, (0, 0))
 
     # get the current time
     current_time = pygame.time.get_ticks() // 1000
+
+    prev_pos_cursor = current_pos_cursor
+    current_pos_cursor = pygame.mouse.get_pos()[0]*zoom, pygame.mouse.get_pos()[1]*zoom
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -97,13 +109,31 @@ while running:
             if dezoom_button.use(event) and zoom > 1.0:
                 zoom -= 0.5
 
+            if go_to_center_button.use(event):
+                x_slide, y_slide = 0, 0
+
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            print(distance_off_screen[0]*zoom)
+            x_slide += (prev_pos_cursor[0] - current_pos_cursor[0])
+            y_slide += (prev_pos_cursor[1] - current_pos_cursor[1])
+
+            if x_slide > distance_off_screen[0]*zoom:
+                x_slide = distance_off_screen[0]*zoom
+            if x_slide < -distance_off_screen[0]*zoom:
+                x_slide = -distance_off_screen[0]*zoom
+            if y_slide > distance_off_screen[1]*zoom:
+                y_slide = distance_off_screen[1]*zoom
+            if y_slide < -distance_off_screen[1]*zoom:
+                y_slide = -distance_off_screen[1]*zoom
+            print(x_slide, y_slide)
+
     if running:
         # print the current time :
         font = pygame.font.SysFont("ArialBlack", 20)
         text = font.render('Time : {} s'.format(current_time), True, (0, 0, 0))
         screen.blit(text, (20, 20))
 
-        all_lignes.display_all_lignes(screen, zoom)
+        all_lignes.display_all_lignes(screen, zoom, x_slide, y_slide)
         tools_menu.print(screen)
 
         pygame.draw.rect(screen, (210, 210, 210), (width - 20 - 82 - 6, 20 - 3, 82 + 9, 41 + 6), border_radius=3)
@@ -115,6 +145,10 @@ while running:
         font = pygame.font.SysFont("ArialBlack", 15)
         text = font.render('x{}'.format(zoom), True, (0, 0, 0))
         screen.blit(text, (width-85, -3))
+
+        go_to_center_button.print(screen)
+        pygame.draw.circle(screen, (130, 0, 0), go_to_center_button.rect.center, 5)
+
 
     # Update the screen
     if running:

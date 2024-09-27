@@ -20,7 +20,7 @@ class ToolsMenu:
 
     def update(self, event):
 
-        if event.type == pygame.MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[2]:  # open menu
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:  # open menu    ;; pygame.mouse.get_pressed()[2]
             self.rect.x, self.rect.y = event.pos
             self.which_submenu = ['1', '0']
             self.all_button.clear()

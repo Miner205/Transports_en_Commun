@@ -9,8 +9,9 @@ class Station:
     def set_position(self, x, y):
         self.position = (x, y)
 
-    def display_a_station(self, screen, color, zoom):
-        fct.pygame_draw_star(screen, color, self.position*zoom, 7*zoom)
+    def display_a_station(self, screen, color, zoom, x_slide, y_slide):
+        fct.pygame_draw_star(screen, color, (zoom*self.position[0]+x_slide, zoom*self.position[1]+y_slide), 7*zoom)
+        # + display it's name
 
 
 class ListStations:
