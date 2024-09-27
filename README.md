@@ -27,4 +27,4 @@ Things Left to Do/Code :
 
 Functionalities done :
 - Open the tools/creation menu with 'click droit'
-- une fonction de zoom/dézoom + de déplacements, sur le plan
+- buttons of zoom/dezoom/go_to_center + function of slides with the mouse (glisser rapidement + maintenir 'click gauche'), for the Plan
