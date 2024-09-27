@@ -8,9 +8,10 @@ class ToolsMenu:
     def __init__(self, x=0, y=0):
         self.which_submenu = ['0']  # 1st char for the actual menu ; next char are for the previous menus
         # ; if num_submenu[0] == '0' : del/reset ToolsMenu
-        self.width = 100 + 20
-        self.height = 32*4 + 20
-        self.rect = pygame.Rect(x, y, self.width, self.height)
+        self.width = 15*10
+        self.height = 32
+        self.nb_of_submenu = 4
+        self.rect = pygame.Rect(x, y, self.width+20, self.height*self.nb_of_submenu+20)
         self.all_button = {}
         self.all_textzone = {}
         self.button_to_del = []
@@ -23,8 +24,8 @@ class ToolsMenu:
             self.which_submenu = ['1', '0']
             self.all_button.clear()
             self.all_textzone.clear()
-            self.all_button["back"] = Button(self.rect.x + 10, self.rect.y + 10 + 32 * 3)
-            self.all_textzone["back"] = TextZone(self.rect.x + 10, self.rect.y + 10 + 32 * 3, False, "back")
+            self.all_button["back"] = Button(self.rect.x + 10, self.rect.y + 10 + 32 * 3, self.width)
+            self.all_textzone["back"] = TextZone(self.rect.x + 10, self.rect.y + 10 + 32 * 3, self.width, False, "back")
 
         elif self.which_submenu[0] != '0' and event.type == pygame.MOUSEBUTTONDOWN and not self.rect.collidepoint(event.pos):
             self.exit_menu()
@@ -48,14 +49,14 @@ class ToolsMenu:
             if self.which_submenu[0] == '0' or (button != "back" and button[0] != self.which_submenu[0]):
                 self.button_to_del.append(button)
 
-        for textzone in self.all_textzone.keys():
-            if textzone != "back" and textzone[0] != self.which_submenu[0]:
-                self.textzone_to_del.append(textzone)
-
         if self.button_to_del:
             for elt in self.button_to_del:
                 del (self.all_button[elt])
             self.button_to_del.clear()
+
+        for textzone in self.all_textzone.keys():
+            if textzone != "back" and textzone[0] != self.which_submenu[0]:
+                self.textzone_to_del.append(textzone)
 
         if self.textzone_to_del:
             for elt in self.textzone_to_del:
@@ -63,21 +64,38 @@ class ToolsMenu:
             self.textzone_to_del.clear()
 
         if self.which_submenu[0] == '1' and "1menutruc" not in self.all_button.keys():
-            self.all_button["1menutruc"] = Button(self.rect.x+10, self.rect.y+10)
-            self.all_button["1menutruc2"] = Button(self.rect.x+10, self.rect.y+10+32)
-            self.all_button["1menutruc3"] = Button(self.rect.x+10, self.rect.y+10+32*2)
-            self.all_textzone["1menutruc"] = TextZone(self.rect.x+10, self.rect.y+10, False, "menutruc")
-            self.all_textzone["1menutruc2"] = TextZone(self.rect.x+10, self.rect.y+10+32, False, "menutruc2")
-            self.all_textzone["1menutruc3"] = TextZone(self.rect.x+10, self.rect.y+10+32*2, False, "menutruc3")
+            self.all_button["1menutruc"] = Button(self.rect.x+10, self.rect.y+10, self.width)
+            self.all_button["1menutruc2"] = Button(self.rect.x+10, self.rect.y+10+32, self.width)
+            self.all_button["1menutruc3"] = Button(self.rect.x+10, self.rect.y+10+32*2, self.width)
+            self.all_textzone["1menutruc"] = TextZone(self.rect.x+10, self.rect.y+10, self.width, False, "menutruc")
+            self.all_textzone["1menutruc2"] = TextZone(self.rect.x+10, self.rect.y+10+32, self.width, False, "menutruc2")
+            self.all_textzone["1menutruc3"] = TextZone(self.rect.x+10, self.rect.y+10+32*2, self.width, False, "menutruc3")
+
+        if self.which_submenu[0] != '0':
+            lens = []
+            for textzone in self.all_textzone.keys():
+                if textzone not in self.textzone_to_del:
+                    lens.append(len(self.all_textzone[textzone].user_text))
+            if max(lens) * 15 != self.width:
+                self.modify_width(max(lens) * 15)
+            del lens
 
     def exit_menu(self):
         self.which_submenu = ['0']
         self.all_button.clear()
         self.all_textzone.clear()
 
+    def modify_width(self, new_width):
+        self.width = new_width
+        self.rect = pygame.Rect(self.rect.x, self.rect.y, new_width+20, self.rect.height)
+        for textzone in self.all_textzone.values():
+            textzone.modify_width(new_width)
+        for button in self.all_button.values():
+            button.modify_width(new_width)
+
     def print(self, screen):
         if self.which_submenu[0] != '0':
-            pygame.draw.rect(screen, (255, 255, 255), self.rect)
+            pygame.draw.rect(screen, (240, 240, 240), self.rect)
 
             for textzone in self.all_textzone.values():
                 textzone.draw(screen)

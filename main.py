@@ -7,9 +7,10 @@ import functions as fct
 from tools_menu import ToolsMenu
 
 
-# To run to start the thing..
+# To run to start the program
 
 
+# Memo :
 #   List  = [] ordered and changeable. Duplicates OK
 #   Set   = {} unordered and immutable, but Add/Remove OK. NO duplicates
 #   Tuple = () ordered and unchangeable. Duplicates OK. FASTER
@@ -17,12 +18,6 @@ from tools_menu import ToolsMenu
 
 if __name__ == '__main__':
     print('main.py launched')
-
-
-# # TO DO :
-#
-# github
-#
 
 
 pygame.init()

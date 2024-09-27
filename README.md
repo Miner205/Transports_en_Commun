@@ -12,7 +12,12 @@ Projet Python pygame personnel
 
 - Github : https://github.com/Miner205/Transports_en_Commun
 
+
 - To run : run main.py
+- Open the tools/creation menu with 'click droit'
 
 
-Bug to verif : 
+known Bugs to fix : 
+
+Things Left to Do/Code :
+a lot of things
