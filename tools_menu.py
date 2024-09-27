@@ -25,8 +25,10 @@ class ToolsMenu:
             self.which_submenu = ['1', '0']
             self.all_button.clear()
             self.all_textzone.clear()
-            self.all_button["back"] = Button(self.rect.x+self.border_margin, self.rect.y+self.border_margin+32*3, self.width, self.height)
-            self.all_textzone["back"] = TextZone(self.rect.x+self.border_margin, self.rect.y+self.border_margin+32*3, self.width, False, "back")
+            self.all_button["back"] = Button(self.rect.x+self.border_margin,
+                                             self.rect.y+self.border_margin+self.height*(self.nb_of_submenu-1), self.width, self.height)
+            self.all_textzone["back"] = TextZone(self.rect.x+self.border_margin,
+                                                 self.rect.y+self.border_margin+self.height*(self.nb_of_submenu-1), self.width, False, "back")
 
         elif self.which_submenu[0] != '0' and event.type == pygame.MOUSEBUTTONDOWN and not self.rect.collidepoint(event.pos):
             self.exit_menu()

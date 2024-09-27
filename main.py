@@ -121,7 +121,7 @@ while running:
                 x_slide, y_slide = 0, 0
 
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            print(distance_off_screen[0]*zoom)
+            # print(distance_off_screen[0]*zoom)
             x_slide += (prev_pos_cursor[0] - current_pos_cursor[0])
             y_slide += (prev_pos_cursor[1] - current_pos_cursor[1])
 
@@ -133,7 +133,7 @@ while running:
                 y_slide = distance_off_screen[1]*zoom
             if y_slide < -distance_off_screen[1]*zoom:
                 y_slide = -distance_off_screen[1]*zoom
-            print(x_slide, y_slide)
+            # print(x_slide, y_slide)
 
     if running:
         # print the current time :

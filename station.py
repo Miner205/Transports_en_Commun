@@ -13,7 +13,7 @@ class Station:
         fct.pygame_draw_star(screen, color, (zoom*self.position[0]-int(distance_off_screen[0]*zoom)+x_slide,
                                              zoom*self.position[1]-int(distance_off_screen[1]*zoom)+y_slide),
                              5*zoom, int(1*zoom))
-        # + display it's name
+        # + display name station ; with a toggle button
 
 
 class ListStations:
