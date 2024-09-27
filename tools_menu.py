@@ -11,7 +11,8 @@ class ToolsMenu:
         self.width = 15*10
         self.height = 32
         self.nb_of_submenu = 4
-        self.rect = pygame.Rect(x, y, self.width+20, self.height*self.nb_of_submenu+20)
+        self.border_margin = 5
+        self.rect = pygame.Rect(x, y, self.width+self.border_margin*2, self.height*self.nb_of_submenu+self.border_margin*2)
         self.all_button = {}
         self.all_textzone = {}
         self.button_to_del = []
@@ -24,8 +25,8 @@ class ToolsMenu:
             self.which_submenu = ['1', '0']
             self.all_button.clear()
             self.all_textzone.clear()
-            self.all_button["back"] = Button(self.rect.x + 10, self.rect.y + 10 + 32 * 3, self.width)
-            self.all_textzone["back"] = TextZone(self.rect.x + 10, self.rect.y + 10 + 32 * 3, self.width, False, "back")
+            self.all_button["back"] = Button(self.rect.x+self.border_margin, self.rect.y+self.border_margin+32*3, self.width, self.height)
+            self.all_textzone["back"] = TextZone(self.rect.x+self.border_margin, self.rect.y+self.border_margin+32*3, self.width, False, "back")
 
         elif self.which_submenu[0] != '0' and event.type == pygame.MOUSEBUTTONDOWN and not self.rect.collidepoint(event.pos):
             self.exit_menu()
@@ -64,12 +65,12 @@ class ToolsMenu:
             self.textzone_to_del.clear()
 
         if self.which_submenu[0] == '1' and "1menutruc" not in self.all_button.keys():
-            self.all_button["1menutruc"] = Button(self.rect.x+10, self.rect.y+10, self.width)
-            self.all_button["1menutruc2"] = Button(self.rect.x+10, self.rect.y+10+32, self.width)
-            self.all_button["1menutruc3"] = Button(self.rect.x+10, self.rect.y+10+32*2, self.width)
-            self.all_textzone["1menutruc"] = TextZone(self.rect.x+10, self.rect.y+10, self.width, False, "menutruc")
-            self.all_textzone["1menutruc2"] = TextZone(self.rect.x+10, self.rect.y+10+32, self.width, False, "menutruc2")
-            self.all_textzone["1menutruc3"] = TextZone(self.rect.x+10, self.rect.y+10+32*2, self.width, False, "menutruc3")
+            self.all_button["1menutruc"] = Button(self.rect.x+self.border_margin, self.rect.y+self.border_margin, self.width, self.height)
+            self.all_button["1menutruc2"] = Button(self.rect.x+self.border_margin, self.rect.y+self.border_margin+32, self.width, self.height)
+            self.all_button["1menutruc3"] = Button(self.rect.x+self.border_margin, self.rect.y+self.border_margin+32*2, self.width, self.height)
+            self.all_textzone["1menutruc"] = TextZone(self.rect.x+self.border_margin, self.rect.y+self.border_margin, self.width, False, "menutruc")
+            self.all_textzone["1menutruc2"] = TextZone(self.rect.x+self.border_margin, self.rect.y+self.border_margin+32, self.width, False, "menutruc2")
+            self.all_textzone["1menutruc3"] = TextZone(self.rect.x+self.border_margin, self.rect.y+self.border_margin+32*2, self.width, False, "menutruc3")
 
         if self.which_submenu[0] != '0':
             lens = []
@@ -87,7 +88,7 @@ class ToolsMenu:
 
     def modify_width(self, new_width):
         self.width = new_width
-        self.rect = pygame.Rect(self.rect.x, self.rect.y, new_width+20, self.rect.height)
+        self.rect = pygame.Rect(self.rect.x, self.rect.y, new_width+self.border_margin*2, self.rect.height)
         for textzone in self.all_textzone.values():
             textzone.modify_width(new_width)
         for button in self.all_button.values():
@@ -95,7 +96,7 @@ class ToolsMenu:
 
     def print(self, screen):
         if self.which_submenu[0] != '0':
-            pygame.draw.rect(screen, (240, 240, 240), self.rect)
+            pygame.draw.rect(screen, (230, 230, 230), self.rect)
 
             for textzone in self.all_textzone.values():
                 textzone.draw(screen)

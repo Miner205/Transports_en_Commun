@@ -67,10 +67,10 @@ class ListLignes:
         if self.find_ligne_by_id(id_ligne):
             (self.find_ligne_by_id(id_ligne)).add_station(station)
 
-    def display_all_lignes(self, screen):           # !!!!!!!!! To test if it's work
+    def display_all_lignes(self, screen, zoom):           # !!!!!!!!! To test if it's work
         for ligne in self.all_lignes:
             for l_station in ligne.ligne_stations.keys():
-                l_station.display_a_station(screen, ligne.color)
+                l_station.display_a_station(screen, ligne.color, zoom)
 
                 for voisin in ligne.ligne_stations[l_station]:
-                    pygame.draw.line(screen, ligne.color, l_station.position, voisin.position, 1)
+                    pygame.draw.line(screen, ligne.color, l_station.position*zoom, voisin.position*zoom, 1*zoom)

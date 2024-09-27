@@ -34,10 +34,10 @@ class TextZone:
 
     def draw(self, screen):
         if self.active:
-            pygame.draw.rect(screen, (255, 255, 255), self.rect, 0, 3)
+            pygame.draw.rect(screen, (255, 255, 255), self.rect, border_radius=3)
             pygame.draw.rect(screen, (255, 220, 0), self.rect, 2, 3)
         else:
-            pygame.draw.rect(screen, (255, 255, 255), self.rect, 0, 3)
+            pygame.draw.rect(screen, (255, 255, 255), self.rect, border_radius=3)
             pygame.draw.rect(screen, (0, 0, 0), self.rect, 2, 3)
         text_surface = self.text_font.render(self.user_text, True, (0, 0, 0))
         screen.blit(text_surface, (self.rect.x + 5, self.rect.y + 5))

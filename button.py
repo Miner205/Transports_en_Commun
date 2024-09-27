@@ -2,9 +2,9 @@ import pygame
 
 
 class Button:
-    def __init__(self, x, y, width):
+    def __init__(self, x, y, width, height):
         super().__init__()
-        self.rect = pygame.Rect(x, y, width, 32)
+        self.rect = pygame.Rect(x, y, width, height)
 
     def use(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -17,4 +17,4 @@ class Button:
         self.rect = pygame.Rect(self.rect.x, self.rect.y, new_width, self.rect.height)
 
     def print(self, screen, opacity=255):
-        pygame.draw.rect(screen, (0, 0, 255, opacity), self.rect, border_radius=3)
+        pygame.draw.rect(screen, (0, 140, 190, opacity), self.rect, border_radius=3)
