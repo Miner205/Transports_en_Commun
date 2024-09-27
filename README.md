@@ -17,7 +17,10 @@ Projet Python pygame personnel
 - Open the tools/creation menu with 'click droit'
 
 
+
 known Bugs to fix : 
 
+
 Things Left to Do/Code :
-a lot of things
+- a lot of things
+- une fonction de zoom/dézoom ? + de déplacements ? sur le plan
