@@ -4,14 +4,10 @@ from ligne import ListLignes, Ligne
 from button import Button
 from textezone import TextZone
 import functions as fct
-# from parameters import Options
+from tools_menu import ToolsMenu
+
 
 # To run to start the thing..
-
-
-
-# Project : Concevoir une solution pour permettre aux usagers du métro d'identiier
-# les lignes de métro les plus sonores ( cartographie acoustique des lignes de métro)
 
 
 #   List  = [] ordered and changeable. Duplicates OK
@@ -20,7 +16,7 @@ import functions as fct
 
 
 if __name__ == '__main__':
-    print('PyCharm')
+    print('main.py launched')
 
 
 # # TO DO :
@@ -51,7 +47,7 @@ all_lignes = ListLignes()
 all_stations.load_list_stations()
 all_lignes.load_list_lignes(all_stations)
 
-b = TextZone(50, 500, 'rr')
+tools_menu = ToolsMenu()
 
 while running:
 
@@ -72,8 +68,6 @@ while running:
     text = font.render('Time : {} s'.format(current_time), True, (0, 0, 0))
     screen.blit(text, (30, 20))
 
-    # if running: maze.run()
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -87,20 +81,12 @@ while running:
             all_lignes.save_list_lignes()
             pygame.quit()
 
-        if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.KEYDOWN:
-            b.use(event)
-
-        """if event.type == pygame.KEYDOWN:
-            maze.keys_pressed[event.key] = True
-
-        if event.type == pygame.KEYUP:
-            maze.keys_pressed[event.key] = False"""
-
-        # maze.update(event)
+        if event.type == pygame.MOUSEBUTTONDOWN:  # or event.type == pygame.KEYDOWN:
+            tools_menu.update(event)
 
     if running:
-        b.draw(screen)
         all_lignes.display_all_lignes(screen)
+        tools_menu.print(screen)
 
     # Update the screen
     if running:

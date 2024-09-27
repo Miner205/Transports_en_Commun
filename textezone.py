@@ -2,17 +2,17 @@ import pygame
 
 
 class TextZone:
-    def __init__(self, x, y, txt=""):
+    def __init__(self, x, y, editing=True, starter_txt=""):
         super().__init__()
         self.text_font = pygame.font.Font(None, 32)
-        self.user_text = txt
-        self.width = 100
-        self.rect = pygame.Rect(x, y, self.width, 32)
+        self.user_text = starter_txt
+        self.rect = pygame.Rect(x, y, 100, 32)
         self.active = False
+        self.editing = editing
 
     def use(self, event):
 
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if self.editing and event.type == pygame.MOUSEBUTTONDOWN:
             if self.rect.collidepoint(event.pos):
                 if not self.active:
                     click_effect = pygame.mixer.Sound("musics/Pen_Clicking.mp3")
@@ -21,7 +21,7 @@ class TextZone:
             else:
                 self.active = False
 
-        if event.type == pygame.KEYDOWN:
+        if self.editing and event.type == pygame.KEYDOWN:
             if self.active:
                 if event.key == pygame.K_BACKSPACE:
                     self.user_text = self.user_text[:-1]
