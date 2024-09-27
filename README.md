@@ -15,7 +15,6 @@ Projet Python pygame personnel
 
 
 - To run : run main.py
-- Open the tools/creation menu with 'click droit'
 
 
 
@@ -24,5 +23,8 @@ known Bugs to fix :
 
 Things Left to Do/Code :
 - a lot of things
-- une fonction de zoom/dézoom ? + de déplacements ? sur le plan
 - overlays stuff : show or hide each one, official ones, possibility to create personal ones ?
+
+Functionalities done :
+- Open the tools/creation menu with 'click droit'
+- une fonction de zoom/dézoom + de déplacements, sur le plan

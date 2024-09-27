@@ -9,8 +9,10 @@ class Station:
     def set_position(self, x, y):
         self.position = (x, y)
 
-    def display_a_station(self, screen, color, zoom, x_slide, y_slide):
-        fct.pygame_draw_star(screen, color, (zoom*self.position[0]+x_slide, zoom*self.position[1]+y_slide), 7*zoom)
+    def display_a_station(self, screen, color, zoom, distance_off_screen, x_slide, y_slide):
+        fct.pygame_draw_star(screen, color, (zoom*self.position[0]-int(distance_off_screen[0]*zoom)+x_slide,
+                                             zoom*self.position[1]-int(distance_off_screen[1]*zoom)+y_slide),
+                             5*zoom, int(1*zoom))
         # + display it's name
 
 
@@ -28,7 +30,7 @@ class ListStations:
         with open("storage_stations.txt", 'r') as f:
             line = f.readline()
             while line != "":
-                L = line.split(';')
+                L = line.strip('\n').split(';')
                 self.all_stations.add(Station(L[0], int(L[1]), int(L[2])))
                 line = f.readline()
 

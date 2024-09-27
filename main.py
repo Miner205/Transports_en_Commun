@@ -66,18 +66,18 @@ while running:
     for w in range(center[0]+int(x_slide), -1, int(-51*zoom)):
         pygame.draw.line(screen, (0, 0, 0), (w, 0), (w, height), int(1*zoom))
         for h in range(center[1]+int(y_slide), -1, int(-51*zoom)):
-            fct.pygame_draw_cross(screen, (255, 0, 0), (w, h), 5*zoom, int(1*zoom))
+            fct.pygame_draw_cross(screen, (255, 0, 0), (w, h), 3*zoom, int(1*zoom))
             pygame.draw.line(screen, (0, 0, 0), (0, h), (width, h), int(1*zoom))
         for h in range(center[1]+int(y_slide), 2 * center[1] + 1, int(51*zoom)):
-            fct.pygame_draw_cross(screen, (255, 0, 0), (w, h), 5*zoom, int(1*zoom))
+            fct.pygame_draw_cross(screen, (255, 0, 0), (w, h), 3*zoom, int(1*zoom))
             pygame.draw.line(screen, (0, 0, 0), (0, h), (width, h), int(1*zoom))
     for w in range(center[0]+int(x_slide), center[0]*2+1, int(51*zoom)):
         pygame.draw.line(screen, (0, 0, 0), (w, 0), (w, height), int(1*zoom))
         for h in range(center[1]+int(y_slide), -1, int(-51*zoom)):
-            fct.pygame_draw_cross(screen, (255, 0, 0), (w, h), 5*zoom, int(1*zoom))
+            fct.pygame_draw_cross(screen, (255, 0, 0), (w, h), 3*zoom, int(1*zoom))
             pygame.draw.line(screen, (0, 0, 0), (0, h), (width, h), int(1*zoom))
         for h in range(center[1]+int(y_slide), 2 * center[1] + 1, int(51*zoom)):
-            fct.pygame_draw_cross(screen, (255, 0, 0), (w, h), 5*zoom, int(1*zoom))
+            fct.pygame_draw_cross(screen, (255, 0, 0), (w, h), 3*zoom, int(1*zoom))
             pygame.draw.line(screen, (0, 0, 0), (0, h), (width, h), int(1*zoom))
     pygame.draw.circle(screen, "green", (center[0]+int(x_slide), center[1]+int(y_slide)), 5*zoom)  # to visualize the center
     # screen.blit(background, (0, 0))
@@ -108,6 +108,14 @@ while running:
                 zoom += 0.5
             if dezoom_button.use(event) and zoom > 1.0:
                 zoom -= 0.5
+                if x_slide > (center[0]-center[0]/zoom)*zoom:
+                    x_slide = (center[0]-center[0]/zoom)*zoom
+                if x_slide < -(center[0]-center[0]/zoom)*zoom:
+                    x_slide = -(center[0]-center[0]/zoom)*zoom
+                if y_slide > (center[1]-center[1]/zoom)*zoom:
+                    y_slide = (center[1]-center[1]/zoom)*zoom
+                if y_slide < -(center[1]-center[1]/zoom)*zoom:
+                    y_slide = -(center[1]-center[1]/zoom)*zoom
 
             if go_to_center_button.use(event):
                 x_slide, y_slide = 0, 0
@@ -133,7 +141,7 @@ while running:
         text = font.render('Time : {} s'.format(current_time), True, (0, 0, 0))
         screen.blit(text, (20, 20))
 
-        all_lignes.display_all_lignes(screen, zoom, x_slide, y_slide)
+        all_lignes.display_all_lignes(screen, zoom, distance_off_screen, int(x_slide), int(y_slide))
         tools_menu.print(screen)
 
         pygame.draw.rect(screen, (210, 210, 210), (width - 20 - 82 - 6, 20 - 3, 82 + 9, 41 + 6), border_radius=3)

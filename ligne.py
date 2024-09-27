@@ -4,7 +4,7 @@ import pygame
 
 
 class Ligne:
-    def __init__(self, type_="", name="", color="", l_s={}):
+    def __init__(self, type_="", name="", color=(0, 0, 0), l_s={}):
         self.type = type_   # M=Metro, R=Rer, T=Tram, B=Bus
         self.name = name
         self.color = color
@@ -28,7 +28,7 @@ class ListLignes:
     def save_list_lignes(self):
         with open("storage_lignes.txt", 'w') as f:
             for ligne in self.all_lignes:
-                f.write(ligne.type + ';' + ligne.name + ';' + ligne.color)
+                f.write(ligne.type + ';' + ligne.name + ';' + str(ligne.color[0])+','+str(ligne.color[1])+','+str(ligne.color[2]))
                 for l_station in ligne.ligne_stations.keys():
                     f.write(';' + l_station.name)
                     for voisin in ligne.ligne_stations[l_station]:
@@ -39,7 +39,7 @@ class ListLignes:
         with open("storage_lignes.txt", 'r') as f:
             line = f.readline()
             while line != "":
-                L = line.split(';')
+                L = line.strip('\n').split(';')
                 thing = {}
                 for i in range(3, len(L)):
                     txt = L[i]
@@ -47,8 +47,9 @@ class ListLignes:
                     thing[all_stations.find_station_by_name(T[0])] = set()
                     for voisin in T[1:]:
                         thing[all_stations.find_station_by_name(T[0])].add(all_stations.find_station_by_name(voisin))
-
-                self.all_lignes.add(Ligne(L[0], L[1], L[2], thing))
+                t = L[2].split(',')
+                color = (int(t[0]), int(t[1]), int(t[2]))
+                self.all_lignes.add(Ligne(L[0], L[1], color, thing))
                 line = f.readline()
 
     def find_ligne_by_id(self, id_):
@@ -67,13 +68,15 @@ class ListLignes:
         if self.find_ligne_by_id(id_ligne):
             (self.find_ligne_by_id(id_ligne)).add_station(station)
 
-    def display_all_lignes(self, screen, zoom, x_slide, y_slide):           # !!!!!!!!! To test if it's work
+    def display_all_lignes(self, screen, zoom, distance_off_screen, x_slide, y_slide):
         for ligne in self.all_lignes:
             for l_station in ligne.ligne_stations.keys():
-                l_station.display_a_station(screen, ligne.color, zoom, x_slide, y_slide)
+                l_station.display_a_station(screen, ligne.color, zoom, distance_off_screen, x_slide, y_slide)
 
                 for voisin in ligne.ligne_stations[l_station]:
                     pygame.draw.line(screen, ligne.color,
-                                     (zoom*l_station.position[0]+x_slide, zoom*l_station.position[1]+y_slide),
-                                     (zoom*voisin.position[0]+x_slide, zoom*voisin.position[1]+y_slide),
-                                     1*zoom)
+                                     (zoom*l_station.position[0]-int(distance_off_screen[0]*zoom)+x_slide,
+                                      zoom*l_station.position[1]-int(distance_off_screen[1]*zoom)+y_slide),
+                                     (zoom*voisin.position[0]-int(distance_off_screen[0]*zoom)+x_slide,
+                                      zoom*voisin.position[1]-int(distance_off_screen[1]*zoom)+y_slide),
+                                     int(1*zoom))
