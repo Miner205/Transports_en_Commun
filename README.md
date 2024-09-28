@@ -26,5 +26,5 @@ Things Left to Do/Code :
 - overlays stuff : show or hide each one, official ones, possibility to create personal ones ?
 
 Functionalities done :
-- Open the tools/creation menu with 'click droit'
+- Open the tools/creation menu with 'click droit' (in it : toggle show_stations_names, ...)
 - buttons of zoom/dezoom/go_to_center + function of slides with the mouse (glisser rapidement + maintenir 'click gauche'), for the Plan

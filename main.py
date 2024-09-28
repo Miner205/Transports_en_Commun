@@ -24,7 +24,7 @@ pygame.init()
 
 # Define a clock
 clock = pygame.time.Clock()
-FPS = 60/2
+FPS = 60//2
 
 # Create a window
 pygame.display.set_caption("Metros plan")
@@ -54,6 +54,11 @@ all_stations.load_list_stations()
 all_lignes.load_list_lignes(all_stations)
 
 tools_menu = ToolsMenu()
+all_toggle_state = {}
+for t_m_state in tools_menu.all_toggle_state.keys():
+    all_toggle_state[t_m_state] = tools_menu.all_toggle_state[t_m_state]
+# for s_l_m_state in show_lignes_menu.all_toggle_state.keys():
+#    all_toggle_state[s_l_m_state] = show_lignes_menu.all_toggle_state[s_l_m_state]
 
 while running:
 
@@ -103,6 +108,10 @@ while running:
 
         if event.type == pygame.MOUSEBUTTONDOWN:  # or event.type == pygame.KEYDOWN:
             tools_menu.update(event)
+            for t_m_state in tools_menu.all_toggle_state.keys():
+                all_toggle_state[t_m_state] = tools_menu.all_toggle_state[t_m_state]
+            # for s_l_m_state in show_lignes_menu.all_toggle_state.keys():
+            #    all_toggle_state[s_l_m_state] = show_lignes_menu.all_toggle_state[s_l_m_state]
 
             if zoom_button.use(event) and zoom < 5.0:
                 zoom += 0.5
@@ -141,7 +150,7 @@ while running:
         text = font.render('Time : {} s'.format(current_time), True, (0, 0, 0))
         screen.blit(text, (20, 20))
 
-        all_lignes.display_all_lignes(screen, zoom, distance_off_screen, int(x_slide), int(y_slide))
+        all_lignes.display_all_lignes(screen, zoom, distance_off_screen, int(x_slide), int(y_slide), all_toggle_state)
         tools_menu.print(screen)
 
         pygame.draw.rect(screen, (210, 210, 210), (width - 20 - 82 - 6, 20 - 3, 82 + 9, 41 + 6), border_radius=3)
