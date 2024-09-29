@@ -5,6 +5,7 @@ from button import Button
 from textezone import TextZone
 import functions as fct
 from tools_menu import ToolsMenu
+from show_lignes_menu import ToggleLignesMenu
 
 
 # To run to start the program
@@ -54,11 +55,13 @@ all_stations.load_list_stations()
 all_lignes.load_list_lignes(all_stations)
 
 tools_menu = ToolsMenu()
+show_lignes_menu = ToggleLignesMenu(width-15*9-20, 20+47+30+32+3*2, all_lignes)
+
 all_toggle_state = {}
 for t_m_state in tools_menu.all_toggle_state.keys():
     all_toggle_state[t_m_state] = tools_menu.all_toggle_state[t_m_state]
-# for s_l_m_state in show_lignes_menu.all_toggle_state.keys():
-#    all_toggle_state[s_l_m_state] = show_lignes_menu.all_toggle_state[s_l_m_state]
+for s_l_m_state in show_lignes_menu.all_toggle_state.keys():
+    all_toggle_state[s_l_m_state] = show_lignes_menu.all_toggle_state[s_l_m_state]
 
 while running:
 
@@ -108,10 +111,11 @@ while running:
 
         if event.type == pygame.MOUSEBUTTONDOWN:  # or event.type == pygame.KEYDOWN:
             tools_menu.update(event)
+            show_lignes_menu.update(event)
             for t_m_state in tools_menu.all_toggle_state.keys():
                 all_toggle_state[t_m_state] = tools_menu.all_toggle_state[t_m_state]
-            # for s_l_m_state in show_lignes_menu.all_toggle_state.keys():
-            #    all_toggle_state[s_l_m_state] = show_lignes_menu.all_toggle_state[s_l_m_state]
+            for s_l_m_state in show_lignes_menu.all_toggle_state.keys():
+                all_toggle_state[s_l_m_state] = show_lignes_menu.all_toggle_state[s_l_m_state]
 
             if zoom_button.use(event) and zoom < 5.0:
                 zoom += 0.5
@@ -151,7 +155,7 @@ while running:
         screen.blit(text, (20, 20))
 
         all_lignes.display_all_lignes(screen, zoom, distance_off_screen, int(x_slide), int(y_slide), all_toggle_state)
-        tools_menu.print(screen)
+        show_lignes_menu.print(screen)
 
         pygame.draw.rect(screen, (210, 210, 210), (width - 20 - 82 - 6, 20 - 3, 82 + 9, 41 + 6), border_radius=3)
         zoom_button.print(screen)
@@ -166,6 +170,7 @@ while running:
         go_to_center_button.print(screen)
         pygame.draw.circle(screen, (130, 0, 0), go_to_center_button.rect.center, 5)
 
+        tools_menu.print(screen)
 
     # Update the screen
     if running:

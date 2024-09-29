@@ -70,14 +70,14 @@ class ListLignes:
 
     def display_all_lignes(self, screen, zoom, distance_off_screen, x_slide, y_slide, all_toggle_state):
         for ligne in self.all_lignes:
-            # if all_toggle_state[ligne_name]:
-            for l_station in ligne.ligne_stations.keys():
-                l_station.display_a_station(screen, ligne.color, zoom, distance_off_screen, x_slide, y_slide, all_toggle_state["2ShowStationsNames"])
+            if all_toggle_state[ligne.id]:
+                for l_station in ligne.ligne_stations.keys():
+                    l_station.display_a_station(screen, ligne.color, zoom, distance_off_screen, x_slide, y_slide, all_toggle_state["2ShowStationsNames"])
 
-                for voisin in ligne.ligne_stations[l_station]:
-                    pygame.draw.line(screen, ligne.color,
-                                     (zoom*l_station.position[0]-int(distance_off_screen[0]*zoom)+x_slide,
-                                      zoom*l_station.position[1]-int(distance_off_screen[1]*zoom)+y_slide),
-                                     (zoom*voisin.position[0]-int(distance_off_screen[0]*zoom)+x_slide,
-                                      zoom*voisin.position[1]-int(distance_off_screen[1]*zoom)+y_slide),
-                                     int(1*zoom))
+                    for voisin in ligne.ligne_stations[l_station]:
+                        pygame.draw.line(screen, ligne.color,
+                                         (zoom*l_station.position[0]-int(distance_off_screen[0]*zoom)+x_slide,
+                                          zoom*l_station.position[1]-int(distance_off_screen[1]*zoom)+y_slide),
+                                         (zoom*voisin.position[0]-int(distance_off_screen[0]*zoom)+x_slide,
+                                          zoom*voisin.position[1]-int(distance_off_screen[1]*zoom)+y_slide),
+                                         int(1*zoom))

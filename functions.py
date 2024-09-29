@@ -38,3 +38,19 @@ def pygame_draw_check(surface, color, center_point, diameter=5, line_thickness=1
     (x, y), d = center_point, diameter//2
     pygame.draw.line(surface, color, (x+d, y-d), (x-d+d*1/2, y+d), line_thickness)
     pygame.draw.line(surface, color, (x-d*5/3+d*1/2, y), (x-d+d*1/2, y+d), line_thickness)
+
+
+def pygame_draw_left_arrow(surface, color, left_middle_pos, right_middle_pos, line_thickness=0):
+    """draw a left arrow ;
+        left_middle_pos & right_middle_pos like (x,y) & (x2,y)"""
+    (x, y), x2 = left_middle_pos, right_middle_pos[0]
+    d = (x2-x)//2
+    pygame.draw.polygon(surface, color, [(x, y), (x2, y-d), (x2, y+d)], line_thickness)
+
+
+def pygame_draw_right_arrow(surface, color, left_middle_pos, right_middle_pos, line_thickness=0):
+    """draw a right arrow ;
+        left_middle_pos & right_middle_pos like (x,y) & (x2,y)"""
+    (x, y), x2 = left_middle_pos, right_middle_pos[0]
+    d = (x2-x)//2
+    pygame.draw.polygon(surface, color, [(x2, y), (x, y-d), (x, y+d)], line_thickness)

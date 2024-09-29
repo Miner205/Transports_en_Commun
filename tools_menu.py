@@ -30,10 +30,6 @@ class ToolsMenu:
             self.all_button.clear()
             self.all_textzone.clear()
             self.all_toggle.clear()
-            self.all_button["back"] = Button(self.rect.x+self.border_margin,
-                                             self.rect.y+self.border_margin+self.height*(self.nb_of_submenu-1), self.width, self.height)
-            self.all_textzone["back"] = TextZone(self.rect.x+self.border_margin,
-                                                 self.rect.y+self.border_margin+self.height*(self.nb_of_submenu-1), self.width, False, "back")
 
         elif self.which_submenu[0] != '0' and event.type == pygame.MOUSEBUTTONDOWN and not self.rect.collidepoint(event.pos):
             self.exit_menu()
@@ -92,28 +88,25 @@ class ToolsMenu:
             self.all_textzone["1Creation"] = TextZone(self.rect.x+self.border_margin, self.rect.y+self.border_margin+32, self.width, False, "Creation")
             self.all_textzone["1Deletion"] = TextZone(self.rect.x+self.border_margin, self.rect.y+self.border_margin+32*2, self.width, False, "Deletion")
             self.nb_of_submenu = 4
-            self.all_button["back"] = Button(self.rect.x + self.border_margin,
-                                             self.rect.y + self.border_margin + self.height * (self.nb_of_submenu - 1), self.width, self.height)
-            self.all_textzone["back"] = TextZone(self.rect.x + self.border_margin,
-                                                 self.rect.y + self.border_margin + self.height * (self.nb_of_submenu - 1), self.width, False, "back")
-            self.rect = pygame.Rect(self.rect.x, self.rect.y, self.width + self.border_margin * 2,
-                                    self.height * self.nb_of_submenu + self.border_margin * 2)
 
         if self.which_submenu[0] == '2' and "2Overlays" not in self.all_button.keys():
             self.all_button["2Overlays"] = Button(self.rect.x+self.border_margin, self.rect.y+self.border_margin+32, self.width, self.height)
             self.all_textzone["2Overlays"] = TextZone(self.rect.x+self.border_margin, self.rect.y+self.border_margin+32, self.width, False, "Overlays")
             self.all_toggle["2ShowStationsNames"] = Toggle(self.rect.x+self.border_margin, self.rect.y+self.border_margin,
-                                                       "ShowStationsNames", self.all_toggle_state["2ShowStationsNames"], self.width, self.height)
+                                                           "ShowStationsNames", self.all_toggle_state["2ShowStationsNames"], self.width, self.height)
             self.nb_of_submenu = 3
-            self.all_button["back"] = Button(self.rect.x + self.border_margin,
-                                             self.rect.y + self.border_margin + self.height * (self.nb_of_submenu - 1), self.width, self.height)
-            self.all_textzone["back"] = TextZone(self.rect.x + self.border_margin,
-                                                 self.rect.y + self.border_margin + self.height * (self.nb_of_submenu - 1), self.width, False, "back")
-            self.rect = pygame.Rect(self.rect.x, self.rect.y, self.width + self.border_margin * 2,
-                                    self.height * self.nb_of_submenu + self.border_margin * 2)
 
 
         if self.which_submenu[0] != '0':
+            self.all_button["back"] = Button(self.rect.x + self.border_margin,
+                                             self.rect.y + self.border_margin + self.height * (self.nb_of_submenu - 1),
+                                             self.width, self.height)
+            self.all_textzone["back"] = TextZone(self.rect.x + self.border_margin,
+                                                 self.rect.y + self.border_margin + self.height * (
+                                                             self.nb_of_submenu - 1), self.width, False, "back")
+            self.rect = pygame.Rect(self.rect.x, self.rect.y, self.width + self.border_margin * 2,
+                                    self.height * self.nb_of_submenu + self.border_margin * 2)
+
             lens = []
             for textzone in self.all_textzone.keys():
                 if textzone not in self.textzone_to_del:
