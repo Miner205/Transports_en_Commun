@@ -149,14 +149,25 @@ while running:
             # print(x_slide, y_slide)
 
     if running:
+        all_lignes.display_all_lignes(screen, zoom, distance_off_screen, int(x_slide), int(y_slide), all_toggle_state)
+
         # print the current time :
         font = pygame.font.SysFont("ArialBlack", 20)
         text = font.render('Time : {} s'.format(current_time), True, (0, 0, 0))
-        screen.blit(text, (20, 20))
-
-        all_lignes.display_all_lignes(screen, zoom, distance_off_screen, int(x_slide), int(y_slide), all_toggle_state)
-        show_lignes_menu.print(screen)
-
+        screen.blit(text, (30, 20))
+        # print (0,0),x&y axis direction :
+        font = pygame.font.SysFont("ArialBlack", 10)
+        text = font.render('0,0', True, (0, 0, 0))
+        screen.blit(text, (0, 1))
+        pygame.draw.line(screen, (0, 0, 0), (20, 8), (50, 8), 3)
+        fct.pygame_draw_right_arrow(screen, (0, 0, 0), (50, 8), (62, 8))
+        pygame.draw.line(screen, (0, 0, 0), (8, 20), (8, 50), 3)
+        fct.pygame_draw_down_arrow(screen, (0, 0, 0), (8, 50), (8, 62))
+        text = font.render('x', True, (0, 0, 0))
+        screen.blit(text, (65, 0))
+        text = font.render('y', True, (0, 0, 0))
+        screen.blit(text, (5, 59))
+        # print zoom/dezoom buttons :
         pygame.draw.rect(screen, (210, 210, 210), (width - 20 - 82 - 6, 20 - 3, 82 + 9, 41 + 6), border_radius=3)
         zoom_button.print(screen)
         fct.pygame_draw_plus(screen, (130, 0, 0), zoom_button.rect.center, zoom_button.rect.w-10, 5)
@@ -166,10 +177,14 @@ while running:
         font = pygame.font.SysFont("ArialBlack", 15)
         text = font.render('x{}'.format(zoom), True, (0, 0, 0))
         screen.blit(text, (width-85, -3))
-
+        # print go to center button :
         go_to_center_button.print(screen)
         pygame.draw.circle(screen, (130, 0, 0), go_to_center_button.rect.center, 5)
 
+        # print SeeLines menu :
+        show_lignes_menu.print(screen)
+
+        # print Tools menu :
         tools_menu.print(screen)
 
     # Update the screen

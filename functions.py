@@ -54,3 +54,11 @@ def pygame_draw_right_arrow(surface, color, left_middle_pos, right_middle_pos, l
     (x, y), x2 = left_middle_pos, right_middle_pos[0]
     d = (x2-x)//2
     pygame.draw.polygon(surface, color, [(x2, y), (x, y-d), (x, y+d)], line_thickness)
+
+
+def pygame_draw_down_arrow(surface, color, top_middle_pos, bottom_middle_pos, line_thickness=0):
+    """draw a down arrow ;
+        left_middle_pos & right_middle_pos like (x,y) & (x,y2)"""
+    (x, y), y2 = top_middle_pos, bottom_middle_pos[1]
+    d = (y2-y)//2
+    pygame.draw.polygon(surface, color, [(x, y2), (x-d, y), (x+d, y)], line_thickness)
